@@ -239,7 +239,8 @@ template <class Container>
 struct Counter : public std::iterator <std::output_iterator_tag,
                          void, void, void, void>
 { 
-	size_t &cnt;
+	// Error C2280.
+	size_t cnt;
 
     Counter(size_t &x) : cnt(x) {}	
  

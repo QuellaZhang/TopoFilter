@@ -241,6 +241,8 @@ def main(args):
             outputs, features = net(images)
             log_outputs = torch.log_softmax(outputs, 1)
 
+            # RuntimeError: expected scalar type Long but found Int.
+            labels = labels.type(torch.LongTensor)
             loss = criterion(log_outputs, labels)
 
             optimizer.zero_grad()
@@ -277,6 +279,7 @@ def main(args):
             prob_all[indices] = softmax_outputs.detach().cpu()
 
             tmp_zeros = torch.zeros(labels.shape[0], num_class)
+            labels = labels.type(torch.LongTensor)
             tmp_zeros[torch.arange(labels.shape[0]), labels] = 1.0
             labels_all[indices] = tmp_zeros
 
